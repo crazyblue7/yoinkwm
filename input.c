@@ -1,6 +1,7 @@
 #include <linux/input.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 #include "input.h"
 
@@ -10,6 +11,7 @@ int *getKeysPressed(struct input_event ev, Display scr) {
 	if ( ev.type == EV_KEY ) {
 		if ( ev.value == 1 ) {
 			keys[ev.code] = 1;
+			printf("code %i\n",ev.code);
 		} else if ( !ev.value ) {
 			keys[ev.code] = 0;
 		}

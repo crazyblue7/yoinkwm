@@ -15,12 +15,16 @@ int main(void) {
 	int rectPos;
 	while (1) { // app loop
 		int *keys = getKeysPressed(input, scr);
-		if ( keys[KEY_D] ) {
+		if ( keys[KEY_D] == 1 ) {
 			rectPos = 120;
 		} else {
 			rectPos = 70;
 		}
-		clear(scr);
+		if ( keys[KEY_ESC] ) {
+			close(scr.fbfd);
+			return 0;
+		}
+		//clear(scr);
 		drawPixel(3, 3, 0x00FF807F, scr);
 		drawRect(0x00F99B0E, 20,20, rectPos,rectPos,scr);
 		update(scr);
@@ -29,6 +33,4 @@ int main(void) {
 
 		}
 	}
-	sleep(5);
-	close(scr.fbfd);
 }

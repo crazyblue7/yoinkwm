@@ -1,14 +1,14 @@
 CC = gcc
 CODE = main.c render.c input.c
+CCFLAGDEBUG = -g -O0
 
-debug: 
-	$(CC) $(CODE) -o debuggy
+debug: $(CODE)
+	$(CC) $(CODE) -o debuggy $(CCFLAGDEBUG)
 	./debuggy
-	rm ./debuggy
 
-debugLog: 
-	$(CC) $(CODE) -o debuggy
+debugLog: $(CODE)
+	$(CC) $(CODE) -o debuggy $(CCFLAGDEBUG)
 	./debuggy > textloggy.txt
 
-rel:
-	$(CC) $(CODE) -o rawWM
+rel: $(CODE)
+	$(CC) $(CODE) -o yoinkWM

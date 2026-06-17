@@ -98,7 +98,7 @@ int *getKeysPressed(struct input_event ev) {
 		} else if ( ev.value == 0 ) {
 			keys[ev.code] = 0;
 		}
-		printf("code %i val %i keys %i \n",ev.code,ev.value,keys[ev.code]);
+		//printf("code %i val %i keys %i \n",ev.code,ev.value,keys[ev.code]);
 	}
 	// type codes:
 	// 1:press

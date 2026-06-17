@@ -37,8 +37,8 @@ Display initDisplay() {
 	printf("ttyname = %s\n", ttyname(STDIN_FILENO));
 	scr.fb = framebuffer;
 	scr.bb = malloc(scr.sizeBytes);
-	ioctl(tty_filedescriptor, KDSETMODE, KD_TEXT);
-	printf("after KDSETMODE\n");
+	//ioctl(tty_filedescriptor, KDSETMODE, KD_TEXT);
+	//printf("after KDSETMODE\n");
 	scr.ttyfd = tty_filedescriptor;
 	return scr;
 } // got help from chatgpt to get stuff rendering in the initDisplay func

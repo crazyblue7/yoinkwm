@@ -8,5 +8,6 @@ typedef struct {
 	int fbfd;
 	int *fb;
 	int *bb;
+	int ttyfd;
 } Display;
 #endif

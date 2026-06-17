@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "render.h"
+#include <linux/kd.h>
 
 Display nullscr;
 
@@ -16,6 +17,7 @@ void msleep(int millis) {
 Display initDisplay() {
 	Display scr;
 	int framebufferfiledescriptor = open("/dev/fb0", O_RDWR);
+	int tty_filedescriptor = open("/dev/tty", O_RDWR);
 	if ( framebufferfiledescriptor == -1 ) {
 		perror("open");
 		return nullscr;
@@ -31,10 +33,19 @@ Display initDisplay() {
 		perror("mmap");
 		return nullscr;
 	}
+	printf("isatty(stdin) = %d\n", isatty(STDIN_FILENO));
+	printf("ttyname = %s\n", ttyname(STDIN_FILENO));
 	scr.fb = framebuffer;
 	scr.bb = malloc(scr.sizeBytes);
+	ioctl(tty_filedescriptor, KDSETMODE, KD_TEXT);
+	printf("after KDSETMODE\n");
+	scr.ttyfd = tty_filedescriptor;
 	return scr;
 } // got help from chatgpt to get stuff rendering in the initDisplay func
+void closeDisplay(Display scr) {
+	close(scr.fbfd);
+	ioctl(scr.ttyfd, KDSETMODE, KD_TEXT);
+}
 
 void drawPixel(int posX, int posY, int color, Display scr) {
 	if ( color < 16777216 ) {

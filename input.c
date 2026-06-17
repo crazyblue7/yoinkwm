@@ -18,14 +18,15 @@ int get_keyboard_event_path(char *out, size_t out_size) {
 	char line[512];
 	char name[256] = {0};
 	int found = 0;
+	char nemo[5] = "\0";
 
 	char event[64] = {0};
 
-	while (fgets(line, sizeof(line), f)) {
+	while (fgets(line, sizeof(line), f) ) {
 
 		// blank line = new device block
 		if (line[0] == '\n' && !found ) {
-			printf("blank line: found=%d event='%s'\n", found, event);
+			//printf("blank line: found=%d event='%s'\n", found, event);
 			name[0] = 0;
 			event[0] = 0;
 			found = 0;
@@ -37,18 +38,22 @@ int get_keyboard_event_path(char *out, size_t out_size) {
 			sscanf(line, "N: Name=\"%255[^\"]\"", name);
 
 			if (strstr(name, "keyd") != NULL && strstr(name, "keyboard")) {
-				printf("NAME: yoink found[%s]\n", name);
+				//printf("NAME: yoink found[%s]\n", name);
 				found = 1;
 			}
 		}
 
 		// handlers line (contains eventX)
 		if (found && strstr(line, "H: Handlers=")) {
-			printf("hand %s\n", line);
+			//printf("hand %s\n", line);
 			char *ev = strstr(line, "event");
 			if (ev) {
 				sscanf(ev, "event%63s", event);
-				printf("ev '%s'\n", event);
+				//printf("ev '%s'\n", event);
+				nemo[0] = event[0];
+				nemo[1] = event[1];
+				//printf("nemo%s\n",nemo);
+				break;
 			}
 		}
 	}
@@ -67,15 +72,15 @@ int *getKeysPressed(struct input_event ev) {
 	int fd;
 
 	int ret = get_keyboard_event_path(path, sizeof(path));
-	printf("ret = %d\n", ret);
+	//printf("ret = %d\n", ret);
 	if (ret == 0) {
 		fd = open(path, O_RDONLY);
-		printf("fd = %d\n", fd);
+		//printf("fd = %d\n", fd);
 
 		if (fd == -1) {
 			perror("open");
 		}
-		printf("Using: %s\n", path);
+	//	printf("Using: %s\n", path);
 	} else {
 		return 0;
 	}
@@ -85,15 +90,15 @@ int *getKeysPressed(struct input_event ev) {
 		return keys;
 	}
 
-	printf("type=%u code=%u value=%d\n",
-		ev.type,ev.code,ev.value);
+	//printf("type=%u code=%u value=%d\n",
+	//	ev.type,ev.code,ev.value);
 	if ( ev.type == EV_KEY ) {
-		if ( ev.value == 1 ) {
+		if ( ev.value == 1 || ev.value == 2 ) {
 			keys[ev.code] = 1;
 		} else if ( ev.value == 0 ) {
 			keys[ev.code] = 0;
 		}
-		printf("code %i\n",ev.code);
+		printf("code %i val %i keys %i \n",ev.code,ev.value,keys[ev.code]);
 	}
 	// type codes:
 	// 1:press

@@ -24,7 +24,10 @@ int main(void) {
 		if ( keys[KEY_ESC] ) {
 			//close(scr.fbfd);
 			//return 0;
-		drawRect(0x00FFFFFF, rectPos,rectPos, 500,500,scr);
+			drawRect(0x00FFFFFF, rectPos,rectPos, 500,500,scr);
+		}
+		if ( keys[125] && keys[50] ) {
+			break;
 		}
 		drawPixel(3, 3, 0x00FF807F, scr);
 		drawRect(0x00F99B0E, 20,20, rectPos,rectPos,scr);
@@ -34,4 +37,5 @@ int main(void) {
 
 		}
 	}
+	return 0;
 }

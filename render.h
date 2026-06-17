@@ -5,6 +5,7 @@
 
 void msleep(int millis);
 Display initDisplay();
+void    closeDisplay(Display scr);
 
 void drawPixel(int posX, int posY, int color, Display scr);
 void drawRect(int color, int x1, int y1, int x2, int y2, Display scr);

@@ -1,13 +1,14 @@
 CC = gcc
+CODE = main.c render.c input.c
 
 debug: 
-	$(CC) main.c -o debuggy
+	$(CC) $(CODE) -o debuggy
 	./debuggy
 	rm ./debuggy
 
 debugLog: 
-	$(CC) main.c -o debuggy
+	$(CC) $(CODE) -o debuggy
 	./debuggy > textloggy.txt
 
 rel:
-	$(CC) main.c -o rawWM
+	$(CC) $(CODE) -o rawWM

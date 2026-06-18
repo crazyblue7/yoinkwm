@@ -80,10 +80,8 @@ int *getKeysPressed(struct input_event ev) {
 		if (fd == -1) {
 			perror("open");
 		}
-	//	printf("Using: %s\n", path);
-	} else {
-		return 0;
-	}
+	} else return 0;
+	fcntl(fd, F_SETFL, O_NONBLOCK);
 	ssize_t n = read(fd, &ev, sizeof(ev));
 	if (n != sizeof(struct input_event)) {
 		printf("perror");
@@ -100,6 +98,7 @@ int *getKeysPressed(struct input_event ev) {
 		}
 		//printf("code %i val %i keys %i \n",ev.code,ev.value,keys[ev.code]);
 	}
+	close(fd);
 	// type codes:
 	// 1:press
 	// 2:release

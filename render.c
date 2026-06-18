@@ -22,6 +22,11 @@ Display initDisplay() {
 		perror("open");
 		return nullscr;
 	}
+
+	// special code for input.c:
+
+	// input.c special code end
+
 	scr.fbfd = framebufferfiledescriptor;
 	struct fb_var_screeninfo vinfo;
 	ioctl(framebufferfiledescriptor, FBIOGET_VSCREENINFO, &vinfo);

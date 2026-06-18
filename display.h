@@ -9,5 +9,7 @@ typedef struct {
 	int *fb;
 	int *bb;
 	int ttyfd;
+	int keys;
+	int kbdfd;
 } Display;
 #endif

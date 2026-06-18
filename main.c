@@ -31,7 +31,7 @@ int main(void) {
 		}
 		drawPixel(3, 3, 0x00FF807F, scr);
 		drawRect(0x00F99B0E, 20,20, rectPos,rectPos,scr);
-		update(scr);
+		//update(scr);
 		msleep(7);
 		if(1){
 
